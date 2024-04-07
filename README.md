@@ -1,2 +1,2 @@
 # BIOL_609_MIDTERM2
-Write and files for Midterm 2 submission.
+Writeup and files for Midterm 2 submission.
