@@ -204,6 +204,35 @@ Using the command below we generate rarefaction curves describing the number of 
 ```
 rarefaction.single(shared=final.opti_mcc.shared, calc=sobs, freq=100)
 ```
+Plot generation code adapted from [this repo.](https://github.com/kahoughton/Mothur-commands-MiSeq-16S/blob/master/Creating%20rarefaction%20curve%20from%20mothur%20output)
+```R
+
+# Rarefaction output from mothur.
+library(tidyverse)
+
+fl <- "final.opti_mcc.groups.rarefaction"
+
+
+# read data, change name of samples
+dat <- read.table(fl, header = T) %%
+  gather('var', 'val', -numsampled) %%
+  mutate(
+    samp = gsub('.*(NDS_GN[0-9]*)$', '\\1', var),
+    var = ifelse(grepl('hci', var), 'hi', ifelse(grepl('lci', var), 'lo', 'val'))
+    ) %%
+  spread(var, val) %%
+  arrange(samp, numsampled)
+
+# Rarefaction plot
+ggplot(dat, aes(x = numsampled, y = val, group = samp)) + 
+  geom_ribbon(aes(ymin = lo, ymax = hi), colour = 'lightgrey', fill = 'lightgrey') +
+  geom_line(aes(colour = samp)) + 
+  theme_bw() + 
+  scale_x_continuous('Number of reads sampled') +  
+  scale_y_continuous('Number of OTUs observed')
+```
+![
+](https://)
 
 Using our subsampling parameter of 223975 above the command below will subsequently attempt to randomly sample all sequences from our singular sample.
 ```
