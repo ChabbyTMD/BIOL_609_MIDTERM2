@@ -231,8 +231,10 @@ ggplot(dat, aes(x = numsampled, y = val, group = samp)) +
   scale_x_continuous('Number of reads sampled') +  
   scale_y_continuous('Number of OTUs observed')
 ```
-![
-](https://)
+![Rarefaction plot
+](rarefaction.png)
+
+> Rarefaction curve appears this way due to the fact we only have one sample in our analysis.
 
 Using our subsampling parameter of 223975 above the command below will subsequently attempt to randomly sample all sequences from our singular sample.
 ```
