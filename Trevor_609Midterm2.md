@@ -135,7 +135,17 @@ Renaming the fasta, count and taxonomy files.
 ```
 rename.file(fasta=midterm609.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pick.fasta, count=midterm609.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pick.count_table, taxonomy=midterm609.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.pick.taxonomy, prefix=final)
 ```
+Visualizing the taxonmic profile of our sequences thus far:
 
+```R
+taxaprofile <- "midterm609.trim.contigs.good.unique.good.filter.unique.precluster.denovo.vsearch.pds.wang.tax.summary"
+txpro <- read.csv(taxaprofile, sep = "\t")
+df <- txpro %>% filter(taxlevel==5) %>% filter(total>5000)
+ggplot(df, aes(x = taxlevel, y = total, fill = taxon)) + 
+  geom_bar(stat = "identity")
+```
+![
+](taxonomic_profile.png)
 ## OTU Clustering
 
 Here where calculate the distance and cluster our sequences with the following commands.
